@@ -1,12 +1,17 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import * as serviceWorker from './serviceWorker';
+import "./style/application.css";
+import React from "react";
+import DOM from "react-dom";
+import Repo from "./repo";
+import Application from "./presenters/application";
+import Presenter from "microcosm/addons/presenter";
 
-ReactDOM.render(<App />, document.getElementById('root'));
+// Do anything on startup here
+const repo = new Repo({ maxHistory: Infinity });
 
-// If you want your app to work offline and load faster, you can change
-// unregister() to register() below. Note this comes with some pitfalls.
-// Learn more about service workers: http://bit.ly/CRA-PWA
-serviceWorker.unregister();
+// Then mount the application
+DOM.render(
+    <Presenter repo={repo}>
+        <Application />
+    </Presenter>,
+    document.getElementById("root")
+);
