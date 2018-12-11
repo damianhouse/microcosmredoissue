@@ -1,11 +1,11 @@
 import React from "react";
 import Presenter from "microcosm/addons/presenter";
 import Button from "./Button";
-import { getRedoRange, getTimeline } from "../actions/Planets";
+import getTimeline, {getRedoRange} from "../get-timeline";
 
 export default class PlanetsPresenter extends Presenter {
     state = {
-        revision: 0
+        revision: 0,
     };
 
     getModel(props, state) {
@@ -15,16 +15,17 @@ export default class PlanetsPresenter extends Presenter {
         };
     }
 
-    undo = clump => {
+    undo = (clump) => {
         this.repo.history.toggle(clump.actions);
 
-        this.setState({ revision: this.state.revision + 1 });
+        // Force the model to recalculate
+        this.setState({revision: this.state.revision + 1});
     };
-
-    redo = clump => {
+    redo = (clump) => {
         this.repo.history.toggle(clump.actions);
 
-        this.setState({ revision: this.state.revision + 1 });
+        // Force the model to recalculate
+        this.setState({revision: this.state.revision + 1});
     };
 
     render() {
@@ -32,8 +33,7 @@ export default class PlanetsPresenter extends Presenter {
         const [undo, redo] = getRedoRange(breadcrumbs);
         const onUndo = () => this.undo(undo);
         const onRedo = () => this.redo(redo);
-        console.log(undo, redo, planets);
-        // console.log(JSON.stringify(breadcrumbs, null, 4));
+        window.repo = this.repo;
 
         return (
             <div>
@@ -52,10 +52,13 @@ export default class PlanetsPresenter extends Presenter {
 }
 
 class PlanetInput extends React.Component {
-    state = { planet: "" };
+    state = {
+        planet: "0",
+        nextPlanet: 1
+    };
 
     reset = () => {
-        this.setState({ planet: "" });
+        this.setState({ planet: this.state.nextPlanet.toString(), nextPlanet: this.state.nextPlanet+1 });
     };
     render() {
         return (

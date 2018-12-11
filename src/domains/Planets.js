@@ -1,16 +1,25 @@
 import { addPlanet } from "../actions/Planets";
-const Planets = {
+class Planets {
+
     getInitialState() {
-        return ["Earth"];
-    },
-    register() {
-        return {
-            [addPlanet]: [this.append]
-        };
-    },
+        return [];
+    }
+
     append(planets, params) {
         return planets.concat(params);
     }
-};
+
+    replace(blocks, {oldBlock, newBlock}) {
+        console.log('replace');
+    }
+
+    register() {
+        return {
+            [addPlanet]: this.append
+        };
+    }
+
+
+}
 
 export default Planets;
