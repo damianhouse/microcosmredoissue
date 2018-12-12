@@ -4,12 +4,9 @@
  */
 
 import {get} from 'microcosm';
-import * as Blocks from './actions/blocks';
-import * as Styles from './actions/styles';
-import * as Themes from './actions/themes';
 import {clump} from './array';
 
-export const TIMEFRAME = 600;
+export const TIMEFRAME = 1;
 
 function isSameOperation(a, b) {
     // Clump together actions of the same type
@@ -22,22 +19,6 @@ function isSameOperation(a, b) {
     return sameDisabled && sameCommand && sameTimeframe;
 }
 
-export const UNDOABLE = [
-    Blocks.addBlock,
-    Blocks.addBlockBefore,
-    Blocks.addBlockAfter,
-    Blocks.addRow,
-    Blocks.duplicateBlock,
-    Blocks.addRowBefore,
-    Blocks.addRowAfter,
-    Blocks.updateBlock,
-    Blocks.removeBlock,
-    Blocks.moveBefore,
-    Blocks.moveAfter,
-    Blocks.setParent,
-    Styles.setStyle,
-    Themes.applyTheme
-];
 
 export function getDisplayName(action) {
     const displayName = get(action, 'command.getDisplayName', () => 'Change');
@@ -64,7 +45,7 @@ export default function getTimeline(history) {
 
     // Reduce down history to only the types that we care about
     const valid = actions.filter(function(action) {
-        return action.is('done') && UNDOABLE.indexOf(action.command) >= 0;
+        return action.is('done');
     });
 
     // Then clump together those actions so they can be reversed in batches

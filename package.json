@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "microcosm": "^12.6.1",
+    "microcosm": "12.10.0",
     "react": "^15.6.0",
     "react-dom": "^15.6.0",
     "react-scripts": "2.1.1"

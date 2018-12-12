@@ -37,7 +37,7 @@ export default class PlanetsPresenter extends Presenter {
 
         return (
             <div>
-                <p>State: {this.state.revision}</p>
+                <p>Revision number: {this.state.revision}</p>
                 <PlanetInput />
                 <p>{planets.join(", ")}</p>
                 <button disabled={!undo} onClick={onUndo}>
